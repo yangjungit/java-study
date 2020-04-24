@@ -47,7 +47,11 @@ public class RabbitReceiver {
                 String body = new String(message.getBody());
                 log.info("body:[{}]", body);
                 User user1 = JSONObject.toJavaObject(JSONObject.parseObject(body), User.class);
+                log.info("user1:[{}]", user1);
+
                 User user2 = JSONObject.parseObject(msg, User.class);
+                log.info("user2:[{}]", user2);
+
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } catch (Exception e) {
                 log.error("exception message:{},cause:{}",e.getMessage(),e.getCause());

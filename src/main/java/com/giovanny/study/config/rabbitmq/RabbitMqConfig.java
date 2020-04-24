@@ -14,6 +14,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,8 @@ public class RabbitMqConfig {
         this.myConnectionFactory = myConnectionFactory;
     }
 
+    @Value("spring.rabbitmq.queue-name")
+    private String queueName;
 
     @Bean
     public AmqpAdmin amqpAdmin() {
@@ -54,7 +57,7 @@ public class RabbitMqConfig {
     @Bean
     public Queue directQueue() {
         // 持久化默认为true
-        return new Queue("directQueue");
+        return new Queue(queueName);
     }
 
     @Bean
@@ -66,7 +69,8 @@ public class RabbitMqConfig {
 
     @Bean
     public Binding bindingDirect(@Qualifier("directQueue") Queue directQueue, Exchange directExchange) {
-        Binding binding = BindingBuilder.bind(directQueue).to(directExchange).with("directQueue").noargs();
+        // with(routingKey) 这里把routingKey设置成queueName了
+        Binding binding = BindingBuilder.bind(directQueue).to(directExchange).with(queueName).noargs();
         binding.setAdminsThatShouldDeclare(amqpAdmin());
         return binding;
     }

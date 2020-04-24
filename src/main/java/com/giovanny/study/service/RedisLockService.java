@@ -9,5 +9,15 @@ package com.giovanny.study.service;
  * @version: v1.0
  **/
 public interface RedisLockService {
-    Long HOLD_TIME_MILLIS = 5000L;
+    /**
+     * 获取锁
+     * 现在的实现是将锁的持有时间保存在value中，没有设置key的过期时间
+     * 这种方式可以用，但不够优秀，目前没有设置key的过期时间
+     * 可以用lua
+     *
+     * @param lockName       key
+     * @param holdTimeMillis 锁持有时间
+     * @return 是否持有锁
+     */
+    boolean scheduleLock(String lockName, long holdTimeMillis);
 }

@@ -3,6 +3,7 @@ package com.giovanny.study;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import tk.mybatis.spring.annotation.MapperScan;
 
 import java.net.InetAddress;
@@ -19,6 +20,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @Slf4j
 @MapperScan(basePackages = {"com.giovanny.study.mapper"})
+@EnableScheduling
 public class JavaStudyApplication {
 
     public static void main(String[] args) {
