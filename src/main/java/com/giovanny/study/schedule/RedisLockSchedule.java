@@ -1,6 +1,7 @@
 package com.giovanny.study.schedule;
 
 import com.giovanny.study.annotation.RedisLockAnnotation;
+import com.giovanny.study.entity.User;
 import com.giovanny.study.rabbitmq.RabbitMsgProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,15 @@ import org.springframework.stereotype.Component;
 public class RedisLockSchedule {
     @Autowired
     private RabbitMsgProducer rabbitMsgProducer;
-    @Value("spring.rabbitmq.queue-name")
+
+    @Value("${spring.rabbitmq.direct-queue-name}")
     private String queueName;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
-    @RedisLockAnnotation(holdTimeMillis = 2 * 1000 * 60)
+    @Scheduled(cron = "0/5 * * * * ?")
+    @RedisLockAnnotation(holdTimeMillis = 2 * 1000)
     public void redisLockTest() {
         log.info("定时任务执行。。。。。。");
-        rabbitMsgProducer.convertAndSend(queueName, "lalalala");
+        User user = new User("sd11", "h哈", "12.sd和");
+        rabbitMsgProducer.convertAndSend(queueName, user);
     }
 }

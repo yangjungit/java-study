@@ -40,7 +40,7 @@ spring:
       simple:
         concurrency: 10
         max-concurrency: 10
-    queue-name: directQueue
+    direct-queue-name: directQueue
 #        acknowledge-mode: manual
 
 mybatis:

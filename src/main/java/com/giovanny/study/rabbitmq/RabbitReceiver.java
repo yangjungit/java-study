@@ -43,23 +43,20 @@ public class RabbitReceiver {
          */
 
 
-            try {
-                String body = new String(message.getBody());
-                log.info("body:[{}]", body);
-                User user1 = JSONObject.toJavaObject(JSONObject.parseObject(body), User.class);
-                log.info("user1:[{}]", user1);
+        try {
+            String body = new String(message.getBody());
+            log.info("body:[{}]", body);
+            /*
+              用更简单的转换方式
+              <pre>User user1 = JSONObject.toJavaObject(JSONObject.parseObject(body), User.class);
+              log.info("user1:[{}]", user1);
+             */
+            User user2 = JSONObject.parseObject(msg, User.class);
+            log.info("user2:[{}]", user2);
 
-                User user2 = JSONObject.parseObject(msg, User.class);
-                log.info("user2:[{}]", user2);
-
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-            } catch (Exception e) {
-                log.error("exception message:{},cause:{}",e.getMessage(),e.getCause());
-                try {
-                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
-                } catch (IOException ex) {
-                    log.error("exception message:{},cause:{}",ex.getMessage(),ex.getCause());
-                }
-            }
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (Exception e) {
+            log.error("exception message:{},cause:{}", e.getMessage(), e.getCause());
+        }
     }
 }

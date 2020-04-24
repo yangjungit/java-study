@@ -42,7 +42,7 @@ public class RabbitMqConfig {
         this.myConnectionFactory = myConnectionFactory;
     }
 
-    @Value("spring.rabbitmq.queue-name")
+    @Value("${spring.rabbitmq.direct-queue-name}")
     private String queueName;
 
     @Bean
