@@ -17,6 +17,8 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+create database IF NOT EXISTS test CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 -- ----------------------------
 -- Table structure for uuu
 -- ----------------------------
