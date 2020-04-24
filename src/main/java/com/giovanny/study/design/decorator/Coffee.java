@@ -1,4 +1,4 @@
-package com.giovanny.study.decorator;
+package com.giovanny.study.design.decorator;
 
 public class Coffee implements Drink {
     //被装饰者 实现Drink 具有某些功能

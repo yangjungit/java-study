@@ -1,4 +1,4 @@
-package com.giovanny.study.decorator;
+package com.giovanny.study.design.decorator;
 
 public class TestMain {
     public static void main(String[] args) {

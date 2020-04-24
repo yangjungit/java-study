@@ -1,4 +1,4 @@
-package com.giovanny.study.decorator;
+package com.giovanny.study.design.decorator;
 
 public class Sugar extends Decorator {
     //装饰的的东西   给被装饰的对象装饰的东西

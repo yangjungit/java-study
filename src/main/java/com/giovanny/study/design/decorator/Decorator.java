@@ -1,4 +1,4 @@
-package com.giovanny.study.decorator;
+package com.giovanny.study.design.decorator;
 
 public abstract class Decorator implements Drink {
     //装饰者
