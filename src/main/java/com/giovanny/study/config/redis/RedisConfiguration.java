@@ -36,6 +36,14 @@ public class RedisConfiguration {
         return redisScript;
     }
 
+    @Bean(name = "acquireScript")
+    public DefaultRedisScript<Boolean> acquireScript() {
+        DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
+        redisScript.setLocation(new ClassPathResource("lua/acquireScript.lua"));
+        redisScript.setResultType(Boolean.class);
+        return redisScript;
+    }
+
 
     /**
      * 实例化 RedisTemplate 对象

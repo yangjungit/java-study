@@ -8,12 +8,6 @@ local arg2 = tonumber(ARGV[2])
 
 local count = tonumber(redis.call("get",key1) or "0")
 
-print(ARGV[1])
-print(ARGV[2])
-
-print(arg1)
-print(arg2)
-
 
 if count+1 > arg1 then
     return false

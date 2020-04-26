@@ -1,10 +1,14 @@
 package com.giovanny.study.utils;
 
+import com.giovanny.study.annotation.ExpireType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @packageName: com.giovanny.study.utils
@@ -50,7 +54,23 @@ public class RedisUtil {
             //如果锁没有过期就返回false，不让其它线程进来
             return false;
         }
-        throw new RuntimeException("redis lock 错误");
+        throw new RuntimeException("redis lock 异常");
+    }
+
+    /**
+     * @param script 脚本
+     * @param keys   key
+     * @param args   参数
+     * @return 获取token成功与否 ，true成功 。即是否可以执行业务
+     * @throws Exception 异常
+     */
+    public Boolean acquire(RedisScript<Boolean> script, List<String> keys, Object... args) throws Exception {
+        Boolean aBoolean = stringRedisTemplate.execute(script, keys, args);
+        if (aBoolean != null) {
+            return aBoolean;
+        }
+        log.warn("stringRedisTemplate.execute return null !");
+        return false;
     }
 
 }
