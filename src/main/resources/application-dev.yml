@@ -40,8 +40,27 @@ spring:
       simple:
         concurrency: 10
         max-concurrency: 10
+        missing-queues-fatal: false
+        acknowledge-mode: manual
     direct-queue-name: directQueue
-#        acknowledge-mode: manual
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: gioavnny
+      auto-offset-reset: latest
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 200
+    producer:
+      linger-ms: 200
+      batch-size: 16384
+      compression-type: gzip
+      retries: 3
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 mybatis:
   type-aliases-package: com.giovanny.study.entity.po.Uuu
@@ -52,8 +71,8 @@ log:
   path: ./log/
   level: info
 executor:
-  corePoolSize: 50
-  maximumPoolSize: 60
-  keepAliveTime: 60
-  queueSize: 50
+  corePoolSize: 100
+  maximumPoolSize: 120
+  keepAliveTime: 5
+  queueSize: 150
 

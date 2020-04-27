@@ -31,7 +31,7 @@ public class ExecutorConfig {
 
 
 
-    @Bean
+    @Bean(name = "executor")
     public Executor getExecutor(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);

@@ -91,7 +91,7 @@ public class RabbitMqConfig {
          */
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack) {
-                log.info("消息发送成功:correlationData({}),ack({}),cause({})", correlationData, true, cause);
+//                log.info("消息发送成功:correlationData({}),ack({}),cause({})", correlationData, true, cause);
             } else {
                 log.info("消息发送失败:correlationData({}),ack({}),cause({})", correlationData, false, cause);
             }
