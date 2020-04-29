@@ -30,14 +30,15 @@
             <level>INFO</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/${LOG_IP}-demo1-%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/${LOG_IP}-java-study-%d{yyyyMMdd}.%i.log</fileNamePattern>
             <maxFileSize>100 MB</maxFileSize>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <logger name="com.example.demo1.mapper" level="DEBUG">
+    <logger name="com.giovanny.study.mapper" level="DEBUG">
         <appender-ref ref="INFO_UP"/>
+<!--        <appender-ref ref="STDOUT"/>-->
     </logger>
 
     <!-- 基于INFO级别处理日志：具体控制台或者文件对日志级别的处理还要看所在appender配置的filter，如果没有配置filter，则使用root配置 -->

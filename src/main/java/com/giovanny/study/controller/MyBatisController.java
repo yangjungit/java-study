@@ -38,6 +38,7 @@ public class MyBatisController {
     @RequestMapping(path = "/uuu/get/list", method = RequestMethod.GET)
     public MyResponse selectList(@RequestBody UuuVo uuuVo) {
         log.info("param:[{}]", uuuVo);
+        //对MySQL通配符转义 % \ _
         PageHelper.startPage(uuuVo.getPageNo(), uuuVo.getPageSize());
         List<Uuu> uuuList = uuuMapper.findBy(uuuVo);
         PageInfo<Uuu> pageInfo = new PageInfo<>(uuuList);
