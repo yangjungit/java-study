@@ -105,6 +105,10 @@ public class RabbitMqConfig {
     public SimpleRabbitListenerContainerFactory manualSimpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(myConnectionFactory);
+        //配置与yaml里配置的spring.rabbitmq.simple 下的一样
+        factory.setConcurrentConsumers(10);
+        factory.setMaxConcurrentConsumers(10);
+        factory.setMissingQueuesFatal(false);
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
 //        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
 //        converter.setDefaultCharset("UTF-8");
