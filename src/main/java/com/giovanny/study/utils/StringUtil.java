@@ -2,7 +2,13 @@ package com.giovanny.study.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,6 +115,120 @@ public class StringUtil {
         System.out.println();
     }
 
+
+    /**
+     * 通过开始时间和结束时间得到时间间隔内的每一天的日期
+     *
+     * @param startDate yyyy/MM/dd
+     * @param endDate   yyyy/MM/dd
+     * @return [yyyy/MM/dd, yyyy/MM/dd]
+     */
+    public static List<String> getDateStrByTimeInterval(String startDate, String endDate) throws ParseException {
+        ArrayList<String> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(startDate));
+        for (long d = cal.getTimeInMillis(); d <= sdf.parse(endDate).getTime(); d = get_D_Plus_1(cal)) {
+            list.add(sdf.format(d));
+        }
+        return list;
+    }
+
+    private static long get_D_Plus_1(Calendar c) {
+        c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
+        return c.getTimeInMillis();
+    }
+
+    /**
+     * 最大公约数
+     *
+     * @param a a
+     * @param b b
+     * @return 最大公约数
+     */
+    private static int getGreatestCommonDivisor(int a, int b) {
+        return a % b == 0 ? b : getGreatestCommonDivisor(b, a % b);
+    }
+
+
+    /**
+     * 递归阶乘
+     *
+     * @param num 传入值
+     * @return 返回阶乘结果
+     */
+    public static long fac(int num) {
+        if (num <= 1) {
+            return num;
+        } else {
+            long facRet = fac(num - 1);
+            return facRet * num;
+        }
+    }
+
+    /**
+     * 四舍五入一个数
+     *
+     * @param before 四舍五入前的值
+     * @param scale  保留小数点
+     * @return 返回double 四舍五入
+     */
+    public static double getNumber(double before, int scale) {
+        if (scale <= 0) {
+            return Math.round(before);
+        } else {
+            return new BigDecimal(before).setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+    }
+
+    /**
+     * 查找第几个丑数
+     * 从1开始的10个丑数分别为1，2，3，4，5，6，8，9，10，12。
+     *
+     * @param index 第几个
+     */
+    private static void findUglyNum(int index) {
+        int[] num = new int[index];
+        int next = 1;
+        num[0] = 1;
+        int index2 = 0;
+        int index3 = 0;
+        int index5 = 0;
+
+        while (next < index) {
+            int num2 = num[index2] * 2;
+            int num3 = num[index3] * 3;
+            int num5 = num[index5] * 5;
+
+            num[next] = getSuitable(num2, num3, num5);
+
+            while (num[index2] * 2 <= num[next]) {
+                index2++;
+            }
+            while (num[index3] * 3 <= num[next]) {
+                index3++;
+            }
+            while (num[index5] * 5 <= num[next]) {
+                index5++;
+            }
+            next++;
+
+        }
+        System.out.println(num[index - 1]);
+    }
+
+    private static int getSuitable(int num2, int num3, int num5) {
+        int s = num2;
+        if (num3 < s) {
+            s = num3;
+        }
+        if (num5 < s) {
+            s = num5;
+        }
+        return s;
+    }
+
+
     public static void main(String[] args) {
 //        boolean emailCheckRet = check("1102394397@qq.com", EMAIL_REGEX);
 //        boolean urlCheckRet = check("http://localhost/8080/haha/ss/2", URL_REGEX);
@@ -121,6 +241,9 @@ public class StringUtil {
 //        System.out.println(passwordCheckRet);
 //        char[] ch = new char[]{'a', '1', 'b', 'c'};
 //        recursionSwap(ch, 1, 3);
-        String qwd = replacer("b_o_o%o\\of\\%", MYSQL_REGEX);
+//        String qwd = replacer("b_o_o%o\\of\\%", MYSQL_REGEX);
+//        long fac = fac(4);
+        findUglyNum(6);
+
     }
 }
