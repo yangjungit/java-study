@@ -24,7 +24,7 @@ import java.util.concurrent.Executor;
  * @date: 2020/4/13 14:48
  * @version: v1.0
  **/
-@Component
+//@Component
 @Slf4j
 public class RabbitReceiver {
     @Autowired
@@ -57,10 +57,10 @@ public class RabbitReceiver {
                 String body = new String(message.getBody());
 //            log.info("body:[{}]", body);
             /*
-              用更简单的转换方式
               <pre>User user1 = JSONObject.toJavaObject(JSONObject.parseObject(body), User.class);
               log.info("user1:[{}]", user1);
              */
+                // 用更简单的转换方式
                 Uuu uuu = JSONObject.parseObject(msg, Uuu.class);
                 userService.insert(uuu);
                 if ("name-0-0".equals(uuu.getName()) || "name-9-199".equals(uuu.getName())) {

@@ -76,3 +76,10 @@ executor:
   keepAliveTime: 5
   queueSize: 150
 
+
+
+convert:
+  rabbitmq:
+    user: com.giovanny.study.entity.User
+    uuu: com.giovanny.study.entity.po.Uuu
+

@@ -12,4 +12,9 @@ public class DoWork3 extends AbstractAdapter {
     public void doSomething() {
         method1();
     }
+
+    @Override
+    public void method2() {
+        super.method2();
+    }
 }

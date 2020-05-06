@@ -64,4 +64,16 @@ public class RabbitMqController {
         });
         return MyResponse.success();
     }
+
+    @GetMapping("/rabbit/one")
+    public MyResponse sendMqMsg() {
+        Uuu uuu = new Uuu();
+        uuu.setName("name-");
+        uuu.setDescription("desc");
+        log.info("uuu:[{}]",uuu);
+        rabbitMsgProducer.convertAndSend("directQueue", uuu);
+        uuu.setName("haha");
+        rabbitMsgProducer.convertAndSend("directQueue", uuu);
+        return MyResponse.success();
+    }
 }
