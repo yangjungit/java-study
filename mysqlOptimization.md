@@ -55,6 +55,17 @@
        查看慢查询日志是否开启：show variables like “slow%”；
        设置慢查询日志开启：set global slow_query_log=on
        查看long_query_time的值：show variables like “long%” 大于这个时间的会计入慢查询
+       show variables like '%timeout%';
+       show OPEN TABLES where In_use > 0;
+       show processlist;
+       show full processlist;
+       SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCKS;
+       SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;
+       show status like '%lock%';
+       kill 2;
+       select * from information_schema.innodb_trx
+       select * from information_schema.innodb_locks
+       select * from information_schema.innodb_lock_waits  
        然后可以去日志文件中查看，也可以用MySQL自带的mysqldumpslow分析
 + explain
 
