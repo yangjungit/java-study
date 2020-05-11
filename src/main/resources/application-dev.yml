@@ -65,6 +65,9 @@ spring:
 mybatis:
   type-aliases-package: com.giovanny.study.entity.po.Uuu
   mapper-locations: classpath*:mapping/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+##需要配置map-underscore-to-camel-case: true  否则在实体类上加@Column注解
 
 
 log:

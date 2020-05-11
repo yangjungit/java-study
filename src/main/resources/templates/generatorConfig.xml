@@ -38,7 +38,11 @@
         </javaClientGenerator>
 
 
-        <table tableName="uuu">
+<!--        <table tableName="uuu">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
+
+        <table tableName="ttl_product_info" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 

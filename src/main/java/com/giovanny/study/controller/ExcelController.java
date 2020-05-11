@@ -30,8 +30,8 @@ public class ExcelController {
     }
 
     @RequestMapping(path = "/export/select")
-    public MyResponse findAll(HttpServletResponse response) {
+    public void findAll(HttpServletResponse response) {
+        //返回值为void。sendHttpResponse已经返回过一次了，再次返回就会出现exception  Cannot call sendError() after the response has been committed
         ttlProductInfoService.export(response,"TtlProductInfoPoAll");
-        return MyResponse.success();
     }
 }
