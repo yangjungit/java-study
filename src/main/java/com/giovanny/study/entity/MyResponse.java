@@ -1,6 +1,12 @@
 package com.giovanny.study.entity;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.ServletResponse;
+import java.io.PrintWriter;
+import java.util.Map;
 
 /**
  * @packageName: com.example.demo1.entity
@@ -11,6 +17,7 @@ import lombok.Data;
  * @version: v1.0
  **/
 @Data
+@Slf4j
 public class MyResponse {
     private int code;
     private String message;
@@ -45,6 +52,23 @@ public class MyResponse {
         this.data = data;
     }
 
+    public static void responseJson(ServletResponse response, MyResponse myResponse) {
+        PrintWriter out = null;
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            out = response.getWriter();
+            out.println(JSON.toJSONString(myResponse));
+        } catch (Exception e) {
+            log.error("【JSON输出异常】" + e);
+        } finally {
+            if (out != null) {
+                out.flush();
+                out.close();
+            }
+        }
+    }
+
 
     public static MyResponse success() {
         return new MyResponse(200);
@@ -59,6 +83,6 @@ public class MyResponse {
     }
 
     public static MyResponse failed(int code, String message) {
-        return new MyResponse(code,message);
+        return new MyResponse(code, message);
     }
 }

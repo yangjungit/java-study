@@ -11,9 +11,9 @@
             <property name="mappers" value="com.giovanny.study.config.mybatis.MyMapper"/>
             <property name="forceAnnotation" value="true"/>
         </plugin>
-<!--        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
-<!--            <property name="mappers" value="tk.mybatis.mapper.common.MySqlMapper"/>-->
-<!--        </plugin>-->
+        <!--        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
+        <!--            <property name="mappers" value="tk.mybatis.mapper.common.MySqlMapper"/>-->
+        <!--        </plugin>-->
 
         <!-- 连接字符串 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -38,14 +38,32 @@
         </javaClientGenerator>
 
 
-<!--        <table tableName="uuu">-->
+        <!--        <table tableName="uuu">-->
+        <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+
+        <!--        <table tableName="ttl_product_info" >-->
+        <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+<!--        <table tableName="sys_menu">-->
 <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
 <!--        </table>-->
 
-        <table tableName="ttl_product_info" >
+        <table tableName="sys_role">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
+<!--        <table tableName="sys_role_menu">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="sys_user">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="sys_user_role">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
 
 
     </context>
