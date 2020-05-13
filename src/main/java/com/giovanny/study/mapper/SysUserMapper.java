@@ -20,5 +20,11 @@ public interface SysUserMapper extends MyMapper<SysUser> {
      */
     List<SysMenu> selectSysMenuByUserId(@Param("userId") Long userId);
 
+    /**
+     * 根据userId查询所有角色
+     *
+     * @param userId userId
+     * @return List<SysRole>
+     */
     List<SysRole> selectSysRoleByUserId(@Param("userId") Long userId);
 }

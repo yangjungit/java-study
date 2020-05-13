@@ -19,4 +19,6 @@ public interface SysUserService {
     List<SysMenu> selectSysMenuByUserId(Long userId);
 
     List<SysRole> selectSysRoleByUserId(Long userId);
+
+    int insert(SysUser user);
 }

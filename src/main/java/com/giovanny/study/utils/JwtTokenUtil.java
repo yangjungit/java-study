@@ -48,7 +48,7 @@ public class JwtTokenUtil {
                 // 签名算法和密钥
                 .signWith(SignatureAlgorithm.HS512, JwtConfig.secret)
                 .compact();
-        log.info("toke:[{}]", token);
+        log.info("token:[{}]", token);
         return token;
     }
 }

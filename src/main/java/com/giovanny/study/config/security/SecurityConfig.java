@@ -18,11 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 
 /**
- * SpringSecurity配置类
+ * SpringSecurity配置类   核心类
  * 开启权限注解,默认是关闭的
  * EnableGlobalMethodSecurity(prePostEnabled = true)
  *
- * @author yangjun
+ * @author YangJun
  */
 @Configuration
 @EnableWebSecurity
@@ -61,9 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 加密方式
-     *
-     * @Author Sans
-     * @CreateTime 2019/10/1 14:00
      */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -97,8 +94,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                // 不进行权限验证的请求或资源(从配置文件中读取)
+                // 不进行权限验证的请求或资源(从配置文件中读取) /index,/login/**,/favicon.ico
                 .antMatchers(JwtConfig.antMatchers.split(",")).permitAll()
+                .antMatchers("/author/register").permitAll()
                 // 其他的需要登陆后才能访问
                 .anyRequest().authenticated()
                 .and()

@@ -13,13 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @packageName: com.giovanny.study.controller
@@ -38,6 +37,23 @@ public class SecurityController {
     private SysRoleService sysRoleService;
     @Autowired
     private SysMenuService sysMenuService;
+
+
+    @PostMapping(path = "/author/register")
+    public MyResponse register(SysUser user) {
+        user.setSalt(user.getPassword());
+        user.setStatus("NORMAL");
+        int insert = sysUserService.insert(user);
+        if (insert > 0) {
+            return MyResponse.success("注册成功");
+        } else if (insert == -1) {
+            return MyResponse.failed(1001, "用户名重复", user);
+        } else {
+            return MyResponse.failed(403, "注册失败", user);
+
+        }
+    }
+
 
     /**
      * 管理端信息
@@ -124,10 +140,6 @@ public class SecurityController {
 
     /**
      * 拥有USER角色和sys:user:info权限可以访问
-     *
-     * @Author Sans
-     * @CreateTime 2019/10/2 14:22
-     * @Return Map<String, Object> 返回数据MAP
      */
     @PreAuthorize("hasRole('USER') and hasPermission('/user/menuList','sys:user:info')")
     @RequestMapping(value = "/user/menuList", method = RequestMethod.GET)

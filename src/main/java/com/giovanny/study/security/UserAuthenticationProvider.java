@@ -49,7 +49,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("密码不正确");
         }
         // 还可以加一些其他信息的判断，比如用户账号已停用等判断
-        if (userInfo.getStatus().equals("PROHIBIT")) {
+        if ("PROHIBIT".equals(userInfo.getStatus())) {
             throw new LockedException("该用户已被冻结");
         }
         // 角色集合

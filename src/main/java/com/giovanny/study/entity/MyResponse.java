@@ -85,4 +85,8 @@ public class MyResponse {
     public static MyResponse failed(int code, String message) {
         return new MyResponse(code, message);
     }
+
+    public static MyResponse failed(int code, String message, Object data) {
+        return new MyResponse(code, message, data);
+    }
 }
