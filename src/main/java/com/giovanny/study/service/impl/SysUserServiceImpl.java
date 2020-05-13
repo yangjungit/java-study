@@ -29,7 +29,6 @@ public class SysUserServiceImpl implements SysUserService {
 
 
     /**
-     *
      * @param sysUserQuery SysUser
      * @return SysUser
      */
@@ -39,4 +38,25 @@ public class SysUserServiceImpl implements SysUserService {
 
     }
 
+    /**
+     * 根据用户ID查询权限集合
+     *
+     * @param userId userId
+     * @return List<SysMenu>
+     */
+    @Override
+    public List<SysMenu> selectSysMenuByUserId(Long userId) {
+        return sysUserMapper.selectSysMenuByUserId(userId);
+    }
+
+    /**
+     * 根据用户ID查询角色集合
+     *
+     * @param userId userId
+     * @return List<SysRole>
+     */
+    @Override
+    public List<SysRole> selectSysRoleByUserId(Long userId) {
+        return sysUserMapper.selectSysRoleByUserId(userId);
+    }
 }

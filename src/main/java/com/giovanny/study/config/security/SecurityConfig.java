@@ -21,6 +21,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
  * SpringSecurity配置类
  * 开启权限注解,默认是关闭的
  * EnableGlobalMethodSecurity(prePostEnabled = true)
+ *
  * @author yangjun
  */
 @Configuration
@@ -60,18 +61,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 加密方式
+     *
      * @Author Sans
      * @CreateTime 2019/10/1 14:00
      */
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     /**
      * 注入自定义PermissionEvaluator
      */
     @Bean
-    public DefaultWebSecurityExpressionHandler userSecurityExpressionHandler(){
+    public DefaultWebSecurityExpressionHandler userSecurityExpressionHandler() {
         DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
         handler.setPermissionEvaluator(new UserPermissionEvaluator());
         return handler;
@@ -81,21 +84,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 配置登录验证逻辑
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth){
+    protected void configure(AuthenticationManagerBuilder auth) {
         //这里可启用我们自己的登陆验证逻辑
         auth.authenticationProvider(userAuthenticationProvider);
     }
+
     /**
      * 配置security的控制逻辑
-     * @Author Sans
-     * @CreateTime 2019/10/1 16:56
-     * @Param  http 请求
+     *
+     * @param http 请求
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 不进行权限验证的请求或资源(从配置文件中读取)
-               .antMatchers(JwtConfig.antMatchers.split(",")).permitAll()
+                .antMatchers(JwtConfig.antMatchers.split(",")).permitAll()
                 // 其他的需要登陆后才能访问
                 .anyRequest().authenticated()
                 .and()

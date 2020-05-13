@@ -1,9 +1,9 @@
 package com.giovanny.study.security;
 
-import com.sans.core.entity.SysRoleEntity;
-import com.sans.core.service.SysUserService;
-import com.sans.security.entity.SelfUserEntity;
-import com.sans.security.service.SelfUserDetailsService;
+import com.giovanny.study.entity.po.SysRole;
+import com.giovanny.study.security.entity.SelfUserEntity;
+import com.giovanny.study.security.service.SelfUserDetailsServiceImpl;
+import com.giovanny.study.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,15 +23,16 @@ import java.util.Set;
 
 /**
  * 自定义登录验证
- * @Author Sans
- * @CreateTime 2019/10/1 19:11
+ *
+ * @author: YangJun
  */
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
     @Autowired
-    private SelfUserDetailsService selfUserDetailsService;
+    private SelfUserDetailsServiceImpl selfUserDetailsServiceImpl;
     @Autowired
     private SysUserService sysUserService;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取表单输入中返回的用户名
@@ -39,7 +40,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 获取表单中输入的密码
         String password = (String) authentication.getCredentials();
         // 查询用户是否存在
-        SelfUserEntity userInfo = selfUserDetailsService.loadUserByUsername(userName);
+        SelfUserEntity userInfo = selfUserDetailsServiceImpl.loadUserByUsername(userName);
         if (userInfo == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
@@ -48,20 +49,21 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("密码不正确");
         }
         // 还可以加一些其他信息的判断，比如用户账号已停用等判断
-        if (userInfo.getStatus().equals("PROHIBIT")){
+        if (userInfo.getStatus().equals("PROHIBIT")) {
             throw new LockedException("该用户已被冻结");
         }
         // 角色集合
         Set<GrantedAuthority> authorities = new HashSet<>();
         // 查询用户角色
-        List<SysRoleEntity> sysRoleEntityList = sysUserService.selectSysRoleByUserId(userInfo.getUserId());
-        for (SysRoleEntity sysRoleEntity: sysRoleEntityList){
+        List<SysRole> sysRoleEntityList = sysUserService.selectSysRoleByUserId(userInfo.getUserId());
+        for (SysRole sysRoleEntity : sysRoleEntityList) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + sysRoleEntity.getRoleName()));
         }
         userInfo.setAuthorities(authorities);
         // 进行登录
         return new UsernamePasswordAuthenticationToken(userInfo, password, authorities);
     }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return true;
