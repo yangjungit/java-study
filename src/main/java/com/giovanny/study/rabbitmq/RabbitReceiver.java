@@ -63,9 +63,7 @@ public class RabbitReceiver {
                 // 用更简单的转换方式
                 Uuu uuu = JSONObject.parseObject(msg, Uuu.class);
                 userService.insert(uuu);
-                if ("name-0-0".equals(uuu.getName()) || "name-9-199".equals(uuu.getName())) {
-                    log.info("uuu:[{}，{}]", uuu,System.currentTimeMillis());
-                }
+                log.info("uuu:[{}，{}]", uuu, System.currentTimeMillis());
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } catch (Exception e) {
                 log.error("exception message:{},cause:{}", e.getMessage(), e.getCause());

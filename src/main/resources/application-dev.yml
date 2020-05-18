@@ -42,6 +42,8 @@ spring:
         max-concurrency: 10
         missing-queues-fatal: false
         acknowledge-mode: manual
+        prefetch: 2
+        default-requeue-rejected: true
     direct-queue-name: directQueue
 
   kafka:

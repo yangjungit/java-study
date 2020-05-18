@@ -32,7 +32,7 @@ public class TestRabbitMsg extends MyStrategy {
             super.workAdapter(msg, uuu.getName());
             log.info("业务操作后");
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.info("消费消息ack失败,ex:{}", e.getMessage());
         }
     }

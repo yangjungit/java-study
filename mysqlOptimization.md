@@ -67,8 +67,9 @@
        select * from information_schema.innodb_locks
        select * from information_schema.innodb_lock_waits  
        然后可以去日志文件中查看，也可以用MySQL自带的mysqldumpslow分析
-+ explain
++ explain 
 
-      explain (sql)
+      explain extended  (sql)
+      show warnings
        
 

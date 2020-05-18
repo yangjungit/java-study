@@ -27,7 +27,7 @@ public class RedisLockSchedule {
     @Value("${spring.rabbitmq.direct-queue-name}")
     private String queueName;
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     @RedisLockAnnotation(holdTimeMillis = 2 * 1000)
     public void redisLockTest() {
         log.info("定时任务执行。。。。。。");
