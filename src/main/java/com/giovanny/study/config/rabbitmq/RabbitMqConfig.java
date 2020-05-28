@@ -110,6 +110,8 @@ public class RabbitMqConfig {
         factory.setMaxConcurrentConsumers(10);
         factory.setMissingQueuesFatal(false);
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        //未ack的消息个数超过此个数，则不再向这个消费者推送消息
+        factory.setPrefetchCount(2);
 //        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
 //        converter.setDefaultCharset("UTF-8");
 //        factory.setMessageConverter(converter);
