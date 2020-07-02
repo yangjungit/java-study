@@ -46,7 +46,7 @@ public class GuavaController {
     }
 
     /**
-     * 队列式的请求 等到有token且不操作等待时间为止
+     * 队列式的请求 等到有token且不超过等待时间为止
      *
      * @param count   count
      * @param timeout timeout
