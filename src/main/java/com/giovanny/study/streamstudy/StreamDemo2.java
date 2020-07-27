@@ -226,8 +226,10 @@ public class StreamDemo2 {
         System.out.println(collect1);
 
         Map<String, Long> collect3 = students.stream().collect(
-                Collectors.groupingBy(StudentInfo::getSchool,
-                        Collectors.counting()));
+                Collectors.groupingBy(
+                        StudentInfo::getSchool,
+                        Collectors.counting()
+                ));
         System.out.println(collect3);
 
         // 分区可以看做是分组的一种特殊情况，在分区中key只有两种情况：true或false，目的是将待分区集合按照条件一分为二，
@@ -235,10 +237,19 @@ public class StreamDemo2 {
         // 例如我们希望将学生分为武大学生和非武大学生，那么可以实现如下：
         Map<Boolean, List<StudentInfo>> collect4 = students
                 .stream()
-                .collect(Collectors.partitioningBy(studentInfo1 -> "武汉大学".equals(studentInfo1.getSchool())));
+                .collect(
+                        Collectors.partitioningBy(studentInfo1 -> "武汉大学".equals(studentInfo1.getSchool()))
+                );
         System.out.println(collect4);
 
-
+        Map<Boolean, Long> collect5 = students
+                .stream()
+                .collect(
+                        Collectors.partitioningBy(studentInfo1 -> "武汉大学".equals(studentInfo1.getSchool()),
+                                Collectors.counting())
+                );
+        System.out.println("-----------collect5--------------");
+        System.out.println(collect5);
         /*
          * 流式处理中的很多都适合采用 分而治之 的思想，从而在处理集合较大时，极大的提高代码的性能，java8的设计者也看到了这一点，所以提供了 并行流式处理。
          * 上面的例子中我们都是调用stream()方法来启动流式处理，java8还提供了parallelStream()来启动并行流式处理，
