@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -100,5 +101,27 @@ public class DateUtils {
     private static long getDayPlus(Calendar c) {
         c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
         return c.getTimeInMillis();
+    }
+
+
+
+    public static String getHexCurrentTimeUnix4byte() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now.toEpochSecond(ZoneOffset.of("+8")));
+        String six = Long.toHexString(System.currentTimeMillis()/1000);
+        String six2 = Long.toHexString(9294967295L);
+        String zero = "";
+        for (int i = 0; i < 8; i++) {
+            if (six.length() < 8) {
+                zero += "0";
+            }
+        }
+        System.out.println("six2="+six2);
+        return zero + six;
+    }
+
+    public static void main(String[] args) {
+        String unix4byte = getHexCurrentTimeUnix4byte();
+        System.out.println(unix4byte);
     }
 }
