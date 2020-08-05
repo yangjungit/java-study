@@ -1,5 +1,10 @@
 package com.giovanny.study.utils;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -12,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * @packageName: com.giovanny.study.utils
@@ -98,17 +105,26 @@ public class DateUtils {
         }
         return list;
     }
+
     private static long getDayPlus(Calendar c) {
         c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
         return c.getTimeInMillis();
     }
 
 
-
     public static String getHexCurrentTimeUnix4byte() {
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(now.toEpochSecond(ZoneOffset.of("+8")));
-        String six = Long.toHexString(System.currentTimeMillis()/1000);
+//        LocalDateTime now = LocalDateTime.now();
+//        System.out.println(now.toEpochSecond(ZoneOffset.of("+8")));
+        //1595936611000
+        long currentTimeMillis = System.currentTimeMillis();
+        System.out.println(String.valueOf(currentTimeMillis));
+        String miliStr = String.valueOf(currentTimeMillis).substring(10);
+        String six = Long.toHexString(currentTimeMillis / 1000);
+        String hexString = Long.toHexString(System.currentTimeMillis());
+        System.out.println("-----------:" + hexString);
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
         String six2 = Long.toHexString(9294967295L);
         String zero = "";
         for (int i = 0; i < 8; i++) {
@@ -116,12 +132,19 @@ public class DateUtils {
                 zero += "0";
             }
         }
-        System.out.println("six2="+six2);
+
+        // 线程安全的Long
+        LongAdder longAdder = new LongAdder();
+
+        System.out.println("six2=" + six2);
         return zero + six;
     }
 
     public static void main(String[] args) {
-        String unix4byte = getHexCurrentTimeUnix4byte();
-        System.out.println(unix4byte);
+        Boolean flag = true;
+        Boolean flag1 = false;
+        String flagStr = String.valueOf(flag);
+        String flagStr1 = String.valueOf(flag1);
+        System.out.println("sss:" + flagStr + "ssss:" + flagStr1);
     }
 }
