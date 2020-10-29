@@ -24,7 +24,7 @@ import java.util.concurrent.Executor;
  * @date: 2020/4/13 14:48
  * @version: v1.0
  **/
-//@Component
+@Component
 @Slf4j
 public class RabbitReceiver {
     @Autowired
@@ -39,10 +39,10 @@ public class RabbitReceiver {
 
     @RabbitListener(queues = "directQueue")
     public void helloReceiverChannel(String msg, Channel channel, Message message) {
-//        log.info("rabbit mq msg:[{}],channel:[{}],message:[{}]", "msg", channel, message);
+//        log.info("rabbit mq msg:[{}],channel:[{}],message:[{}]", "msg", channel, message)
         /*
           使用rabbitTemplate.convertAndSend时：
-          SimpleRabbitListenerContainerFactory 手动配置了setMessageConverter(new Jackson2JsonMessageConverter());
+          SimpleRabbitListenerContainerFactory 手动配置了setMessageConverter(new Jackson2JsonMessageConverter())
           因此消息（String msg）就应该是json格式的，不然会因为转换不了而报错 但这种方式会比较快
 
           也可以用默认的转换，即不设置setMessageConverter  方法上用 string 接收[helloReceiver(String msg, Channel channel, Message message)]，然后自己手动转换如下代码
@@ -67,6 +67,7 @@ public class RabbitReceiver {
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             } catch (Exception e) {
                 log.error("exception message:{},cause:{}", e.getMessage(), e.getCause());
+//                channel.basicNack();
             }
         });
 

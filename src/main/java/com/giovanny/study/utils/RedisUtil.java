@@ -1,6 +1,5 @@
 package com.giovanny.study.utils;
 
-import com.giovanny.study.annotation.ExpireType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,9 +25,11 @@ public class RedisUtil {
 
     /**
      * 给某坨代码A加锁，返回是否持有这坨代码的锁
+     * 虽然已经判断了当前时间了，但还可以扩展一下，设置锁得过期时间（存在时间） timeout 可以设置的稍长一点
+     * 有这个到期时间后就不需要后续if的判断了
      *
      * @param key        令牌
-     * @param newExpires 持有锁的到期时间（这里用E来表示）
+     * @param newExpires 持有锁的到期时间（这里用E来表示） 注意是到期时间，前面传参时已经加了当前时间了
      * @return 是否持有锁
      */
     public boolean scheduleLock(String key, String newExpires) {

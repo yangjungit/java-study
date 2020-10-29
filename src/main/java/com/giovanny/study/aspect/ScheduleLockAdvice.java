@@ -70,6 +70,7 @@ public class ScheduleLockAdvice {
             boolean lock = redisLockService.scheduleLock(lockName, annotation.holdTimeMillis());
             if (lock) {
                 log.info("[{}]获取到锁", lockName);
+                // 这里执行完以后可以主动释放锁（直接删除锁） 可以用try-finally在finally里面释放锁 也可以判断pjp.proceed()返回释放锁，但是这个有涉及业务了
                 return pjp.proceed();
             } else {
                 log.info("[{}]没有获取到锁,此次不执行！", lockName);
