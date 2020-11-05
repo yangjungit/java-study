@@ -1,7 +1,7 @@
 spring:
   datasource:
     name: production
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true&&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://172.16.33.69:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true&&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -25,14 +25,14 @@ spring:
     sql-script-encoding: utf-8
 
   redis:
-    host: localhost
+    host: 172.16.33.69
     port: 6379
 
   rabbitmq:
-    host: localhost
+    host: 172.16.33.69
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: admin
     virtual-host: /
     publisher-confirm-type: correlated
     publisher-returns: true
@@ -47,7 +47,7 @@ spring:
     direct-queue-name: directQueue
 
   kafka:
-    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: 172.16.33.69:9092
     consumer:
       group-id: gioavnny
       auto-offset-reset: latest
@@ -99,4 +99,10 @@ convert:
   rabbitmq:
     user: com.giovanny.study.entity.User
     uuu: com.giovanny.study.entity.po.Uuu
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 

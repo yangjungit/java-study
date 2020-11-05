@@ -23,4 +23,9 @@
      这三个过程，每秒能够完成N个这三个过程，Tps也就是N；
      
      2、Qps基本类似于Tps，但是不同的是，对于一个页面的一次访问，形成一个Tps；但一次页面请求，可能产生多次对服务器的请求，服务器对这些请求，就可计入“Qps”之中。
-    
+     
+###六、SpringBoot健康检查实现原理 
+
+    https://www.cnblogs.com/zhixiang-org-cn/p/11645753.html
+    这个人有点东西可以看：
+    https://www.cnblogs.com/zhixiang-org-cn/default.html?page=5

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @date: 2020/4/24 17:24
  * @version: v1.0
  **/
-@Component
+//@Component
 @Slf4j
 public class RedisLockSchedule {
     @Autowired

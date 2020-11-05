@@ -3,9 +3,14 @@ package com.giovanny.study.config.security;
 import com.giovanny.study.config.jwt.JwtConfig;
 import com.giovanny.study.security.UserAuthenticationProvider;
 import com.giovanny.study.security.UserPermissionEvaluator;
-import com.giovanny.study.security.handler.*;
+import com.giovanny.study.security.handler.UserAuthAccessDeniedHandler;
+import com.giovanny.study.security.handler.UserAuthenticationEntryPointHandler;
+import com.giovanny.study.security.handler.UserLoginFailureHandler;
+import com.giovanny.study.security.handler.UserLoginSuccessHandler;
+import com.giovanny.study.security.handler.UserLogoutSuccessHandler;
 import com.giovanny.study.security.jwt.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -97,6 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不进行权限验证的请求或资源(从配置文件中读取) /index,/login/**,/favicon.ico
                 .antMatchers(JwtConfig.antMatchers.split(",")).permitAll()
                 .antMatchers("/author/register").permitAll()
+                //官方说这样也可以将springboot 健康检测的路径都过来掉不经过权限验证 可以在yaml中 jwt 配置 /actuator/**
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 // 其他的需要登陆后才能访问
                 .anyRequest().authenticated()
                 .and()

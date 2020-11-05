@@ -1,25 +1,24 @@
 package com.giovanny.study.config.rabbitmq;
 
 
-import com.alibaba.druid.util.StringUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AcknowledgeMode;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 /**
  * @packageName: com.example.demo1.config.rabbitmq
@@ -60,9 +59,24 @@ public class RabbitMqConfig {
         return new Queue(queueName);
     }
 
+    /**
+     * new DirectExchange("exDirect", true, true)
+     * 第二个参数持久化 遇到一个问题:
+     * 开始，创建没有问题，过了很久，不知道什么原因，我再次重启次项目，发现不能创建队列了，
+     * Caused by: com.rabbitmq.client.ShutdownSignalException: channel error; protocol method: #method<channel.close>(reply-code=404, reply-text=NOT_FOUND - no queue 'directQueue' in vhost '/', class-id=50, method-id=10)
+     * 过程：rabbit mq管理界面查看，再查看rabbit mq日志
+     * operation exchange.declare caused a channel exception precondition_failed: inequivalent arg 'durable' for exchange 'exDirect' in vhost '/': received 'false' but current is 'true'
+     * 最后在rabbit mq日志中发现 Queue 的 durable 和 DirectExchange 的 durable 不一致导致创建队列失败
+     * 设置DirectExchange的durable为true解决
+     * 猜测，设置队列的durable也能解决，但我没有试 嘿嘿
+     * <p>
+     * 自动删除
+     *
+     * @return DirectExchange
+     */
     @Bean
     public Exchange directExchange() {
-        DirectExchange exchange = new DirectExchange("exDirect", false, true);
+        DirectExchange exchange = new DirectExchange("exDirect", true, true);
         exchange.setAdminsThatShouldDeclare(amqpAdmin());
         return exchange;
     }

@@ -13,9 +13,10 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @version: v1.0
  **/
 @Slf4j
-public class MyApplicationContextInitializer implements ApplicationContextInitializer {
+public class MyApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     @Override
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+        // configurableApplicationContext.getBean("")
         log.info("这里可以开始对硬件、网络等进行检测，检测到不符合项目启动要求就不启动了，MyApplicationContextInitializer...");
     }
 }

@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
- * @packageName: com.example.demo1.config
+ * @packageName: com.giovanny.study.config.redis
  * @className: FastJsonRedisSerializer
  * @description: 暂时没有用
  * @author: YangJun
