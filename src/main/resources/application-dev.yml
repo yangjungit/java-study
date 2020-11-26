@@ -1,0 +1,108 @@
+spring:
+  datasource:
+    name: production
+    url: jdbc:mysql://172.16.33.69:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true&&useSSL=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    schema: classpath:databases/uuu.sql
+    continue-on-error: true
+    initialization-mode: always
+    sql-script-encoding: utf-8
+
+  redis:
+    host: 172.16.33.69
+    port: 6379
+
+  rabbitmq:
+    host: 172.16.33.69
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        missing-queues-fatal: false
+        acknowledge-mode: manual
+        prefetch: 2
+        default-requeue-rejected: true
+    direct-queue-name: directQueue
+
+  kafka:
+    bootstrap-servers: 172.16.33.69:9092
+    consumer:
+      group-id: gioavnny
+      auto-offset-reset: latest
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 200
+    producer:
+      linger-ms: 200
+      batch-size: 16384
+      compression-type: gzip
+      retries: 3
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+mybatis:
+  type-aliases-package: com.giovanny.study.entity.po.Uuu
+  mapper-locations: classpath*:mapping/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+##需要配置map-underscore-to-camel-case: true  否则在实体类上加@Column注解
+
+# JWT配置
+jwt:
+  # 密匙KEY
+  secret: JWTSecret
+  # HeaderKEY
+  tokenHeader: Authorization
+  # Token前缀字符
+  tokenPrefix: giovanny-
+  # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
+  expiration: 86400
+  # 配置不需要认证的接口
+  antMatchers: /index,/login/**,/favicon.ico
+
+log:
+  path: ./log/
+  level: info
+executor:
+  corePoolSize: 100
+  maximumPoolSize: 120
+  keepAliveTime: 5
+  queueSize: 150
+
+
+
+convert:
+  rabbitmq:
+    user: com.giovanny.study.entity.User
+    uuu: com.giovanny.study.entity.po.Uuu
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
